@@ -9,4 +9,58 @@
   <h1>Mi app de finanzas 💰</h1>
   <p>¡Hola mundo! Esta es mi primera app publicada.</p>
 </body>
+<!-- Firebase SDKs -->
+<script type="module">
+  // Importamos Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
+    authDomain: "financetracker-698fc.firebaseapp.com",
+    projectId: "financetracker-698fc",
+    storageBucket: "financetracker-698fc.appspot.com",
+    messagingSenderId: "324352403818",
+    appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
+  };
+
+  // Inicializamos Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Función para registrar un usuario nuevo
+  window.register = () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => alert("¡Registrado con éxito!"))
+      .catch((error) => alert("Error: " + error.message));
+  };
+
+  // Función para iniciar sesión
+  window.login = () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => alert("¡Sesión iniciada!"))
+      .catch((error) => alert("Error: " + error.message));
+  };
+
+  // Listener para ver si hay alguien logueado
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Usuario activo:", user.email);
+    } else {
+      console.log("Nadie logueado");
+    }
+  });
+</script>
+
 </html>
+<h2>Iniciar sesión o registrarse</h2>
+<input type="email" id="email" placeholder="Email" />
+<input type="password" id="password" placeholder="Contraseña" />
+<br />
+<button onclick="register()">Registrarse</button>
+<button onclick="login()">Iniciar Sesión</button>
