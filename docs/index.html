@@ -20,17 +20,11 @@
 
   <p id="mensaje"></p>
 
-  <!-- Firebase SDKs -->
   <script type="module">
+    // Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
       authDomain: "financetracker-698fc.firebaseapp.com",
@@ -40,12 +34,10 @@
       appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
     };
 
-    // Inicialización Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Registro
-    window.registrar = async () => {
+    window.registrar = async function () {
       const email = document.getElementById("email").value;
       const pass = document.getElementById("password").value;
       try {
@@ -56,8 +48,7 @@
       }
     };
 
-    // Login
-    window.iniciarSesion = async () => {
+    window.iniciarSesion = async function () {
       const email = document.getElementById("loginEmail").value;
       const pass = document.getElementById("loginPassword").value;
       try {
@@ -67,15 +58,6 @@
         document.getElementById("mensaje").innerText = "❌ " + error.message;
       }
     };
-
-    // Ver si hay un usuario logueado
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("Usuario activo:", user.email);
-      } else {
-        console.log("Nadie logueado");
-      }
-    });
   </script>
 </body>
 </html>
