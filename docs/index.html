@@ -8,8 +8,7 @@
 <body>
   <h1>Mi app de finanzas 💰</h1>
   <p>¡Hola mundo! Esta es mi primera app publicada.</p>
-</body>
-<!-- Firebase SDKs -->
+  <!-- Firebase SDKs -->
 <script type="module">
   // Importamos Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -106,4 +105,10 @@ export { auth };
       document.getElementById("mensaje").innerText = "❌ " + error.message;
     }
   }
+</body>
 </script>
+<form id="registerForm">
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Contraseña" required />
+  <button type="submit">Registrarse</button>
+</form>
