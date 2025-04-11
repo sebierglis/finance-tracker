@@ -1,114 +1,81 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Finance Tracker</title>
 </head>
 <body>
   <h1>Mi app de finanzas 💰</h1>
-  <p>¡Hola mundo! Esta es mi primera app publicada.</p>
+
+  <h2>Registrarse</h2>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Contraseña" />
+  <button onclick="registrar()">Registrarse</button>
+
+  <h2>Iniciar sesión</h2>
+  <input type="email" id="loginEmail" placeholder="Email" />
+  <input type="password" id="loginPassword" placeholder="Contraseña" />
+  <button onclick="iniciarSesion()">Iniciar sesión</button>
+
+  <p id="mensaje"></p>
+
   <!-- Firebase SDKs -->
-<script type="module">
-  // Importamos Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-  // Tu configuración de Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
-    authDomain: "financetracker-698fc.firebaseapp.com",
-    projectId: "financetracker-698fc",
-    storageBucket: "financetracker-698fc.appspot.com",
-    messagingSenderId: "324352403818",
-    appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
-  };
+    // Configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
+      authDomain: "financetracker-698fc.firebaseapp.com",
+      projectId: "financetracker-698fc",
+      storageBucket: "financetracker-698fc.appspot.com",
+      messagingSenderId: "324352403818",
+      appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
+    };
 
-  // Inicializamos Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    // Inicialización Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  // Función para registrar un usuario nuevo
-  window.register = () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => alert("¡Registrado con éxito!"))
-      .catch((error) => alert("Error: " + error.message));
-  };
+    // Registro
+    window.registrar = async () => {
+      const email = document.getElementById("email").value;
+      const pass = document.getElementById("password").value;
+      try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        document.getElementById("mensaje").innerText = "✅ Usuario registrado";
+      } catch (error) {
+        document.getElementById("mensaje").innerText = "❌ " + error.message;
+      }
+    };
 
-  // Función para iniciar sesión
-  window.login = () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => alert("¡Sesión iniciada!"))
-      .catch((error) => alert("Error: " + error.message));
-  };
+    // Login
+    window.iniciarSesion = async () => {
+      const email = document.getElementById("loginEmail").value;
+      const pass = document.getElementById("loginPassword").value;
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        document.getElementById("mensaje").innerText = "✅ Sesión iniciada";
+      } catch (error) {
+        document.getElementById("mensaje").innerText = "❌ " + error.message;
+      }
+    };
 
-  // Listener para ver si hay alguien logueado
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Usuario activo:", user.email);
-    } else {
-      console.log("Nadie logueado");
-    }
-  });
-</script>
-
-</html>
-<h2>Iniciar sesión o registrarse</h2>
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Contraseña" />
-<br />
-<button onclick="register()">Registrarse</button>
-<button onclick="login()">Iniciar Sesión</button>
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-
-// Al final de tu archivo de configuración Firebase:
-const auth = getAuth(app);
-
-export { auth };
-<h2>Registrarse</h2>
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Contraseña" />
-<button onclick="registrar()">Registrarse</button>
-
-<h2>Iniciar sesión</h2>
-<input type="email" id="loginEmail" placeholder="Email" />
-<input type="password" id="loginPassword" placeholder="Contraseña" />
-<button onclick="iniciarSesion()">Iniciar sesión</button>
-
-<p id="mensaje"></p>
-<script type="module">
-  import { auth } from './firebase.js';
-  import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-  window.registrar = async function () {
-    const email = document.getElementById("email").value;
-    const pass = document.getElementById("password").value;
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      document.getElementById("mensaje").innerText = "✅ Usuario registrado";
-    } catch (error) {
-      document.getElementById("mensaje").innerText = "❌ " + error.message;
-    }
-  }
-
-  window.iniciarSesion = async function () {
-    const email = document.getElementById("loginEmail").value;
-    const pass = document.getElementById("loginPassword").value;
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      document.getElementById("mensaje").innerText = "✅ Sesión iniciada";
-    } catch (error) {
-      document.getElementById("mensaje").innerText = "❌ " + error.message;
-    }
-  }
+    // Ver si hay un usuario logueado
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Usuario activo:", user.email);
+      } else {
+        console.log("Nadie logueado");
+      }
+    });
+  </script>
 </body>
-</script>
-<form id="registerForm">
-  <input type="email" id="email" placeholder="Email" required />
-  <input type="password" id="password" placeholder="Contraseña" required />
-  <button type="submit">Registrarse</button>
-</form>
+</html>
