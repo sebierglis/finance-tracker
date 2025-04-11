@@ -64,3 +64,46 @@
 <br />
 <button onclick="register()">Registrarse</button>
 <button onclick="login()">Iniciar Sesión</button>
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+// Al final de tu archivo de configuración Firebase:
+const auth = getAuth(app);
+
+export { auth };
+<h2>Registrarse</h2>
+<input type="email" id="email" placeholder="Email" />
+<input type="password" id="password" placeholder="Contraseña" />
+<button onclick="registrar()">Registrarse</button>
+
+<h2>Iniciar sesión</h2>
+<input type="email" id="loginEmail" placeholder="Email" />
+<input type="password" id="loginPassword" placeholder="Contraseña" />
+<button onclick="iniciarSesion()">Iniciar sesión</button>
+
+<p id="mensaje"></p>
+<script type="module">
+  import { auth } from './firebase.js';
+  import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+  window.registrar = async function () {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+      document.getElementById("mensaje").innerText = "✅ Usuario registrado";
+    } catch (error) {
+      document.getElementById("mensaje").innerText = "❌ " + error.message;
+    }
+  }
+
+  window.iniciarSesion = async function () {
+    const email = document.getElementById("loginEmail").value;
+    const pass = document.getElementById("loginPassword").value;
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+      document.getElementById("mensaje").innerText = "✅ Sesión iniciada";
+    } catch (error) {
+      document.getElementById("mensaje").innerText = "❌ " + error.message;
+    }
+  }
+</script>
