@@ -7,24 +7,26 @@
 </head>
 <body>
   <h1>Mi app de finanzas 💰</h1>
+  <p>¡Hola mundo! Esta es mi primera app publicada.</p>
 
   <h2>Registrarse</h2>
   <input type="email" id="email" placeholder="Email" />
   <input type="password" id="password" placeholder="Contraseña" />
-  <button onclick="registrar()">Registrarse</button>
+  <button id="registerBtn">Registrarse</button>
 
   <h2>Iniciar sesión</h2>
   <input type="email" id="loginEmail" placeholder="Email" />
   <input type="password" id="loginPassword" placeholder="Contraseña" />
-  <button onclick="iniciarSesion()">Iniciar sesión</button>
+  <button id="loginBtn">Iniciar sesión</button>
 
   <p id="mensaje"></p>
 
   <script type="module">
-    // Firebase SDKs
+    // Importamos Firebase desde CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+    // Configuración de Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
       authDomain: "financetracker-698fc.firebaseapp.com",
@@ -34,30 +36,35 @@
       appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
     };
 
+    // Inicializamos Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    window.registrar = async function () {
+    // Función registrar
+    document.getElementById("registerBtn").addEventListener("click", async () => {
       const email = document.getElementById("email").value;
-      const pass = document.getElementById("password").value;
-      try {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        document.getElementById("mensaje").innerText = "✅ Usuario registrado";
-      } catch (error) {
-        document.getElementById("mensaje").innerText = "❌ " + error.message;
-      }
-    };
+      const password = document.getElementById("password").value;
 
-    window.iniciarSesion = async function () {
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPassword").value;
       try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        document.getElementById("mensaje").innerText = "✅ Sesión iniciada";
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        document.getElementById("mensaje").innerText = "✅ Usuario registrado: " + userCredential.user.email;
       } catch (error) {
-        document.getElementById("mensaje").innerText = "❌ " + error.message;
+        document.getElementById("mensaje").innerText = "❌ Error: " + error.message;
       }
-    };
+    });
+
+    // Función iniciar sesión
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        document.getElementById("mensaje").innerText = "✅ Sesión iniciada como: " + userCredential.user.email;
+      } catch (error) {
+        document.getElementById("mensaje").innerText = "❌ Error: " + error.message;
+      }
+    });
   </script>
 </body>
 </html>
