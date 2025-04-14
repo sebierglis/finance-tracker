@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finance Tracker</title>
-</head>
-<body>
-  <h1>Mi app de finanzas 💰</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Finance Tracker</title>
+  </head>
+  <body>
+    <h1>Mi app de finanzas 💰</h1>
+    <p>¡Hola mundo! Esta es mi primera app publicada.</p>
 
-  <h2>Registrarse</h2>
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Contraseña" />
-  <button onclick="registrar()">Registrarse</button>
+    <h2>Registrarse</h2>
+    <input type="email" id="registerEmail" placeholder="Email" />
+    <input type="password" id="registerPassword" placeholder="Contraseña" />
+    <button onclick="registrar()">Registrarse</button>
 
-  <h2>Iniciar sesión</h2>
-  <input type="email" id="loginEmail" placeholder="Email" />
-  <input type="password" id="loginPassword" placeholder="Contraseña" />
-  <button onclick="iniciarSesion()">Iniciar sesión</button>
+    <h2>Iniciar sesión</h2>
+    <input type="email" id="loginEmail" placeholder="Email" />
+    <input type="password" id="loginPassword" placeholder="Contraseña" />
+    <button onclick="iniciarSesion()">Iniciar sesión</button>
 
-  <p id="mensaje"></p>
+    <p id="mensaje"></p>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
-      authDomain: "financetracker-698fc.firebaseapp.com",
-      projectId: "financetracker-698fc",
-      storageBucket: "financetracker-698fc.appspot.com",
-      messagingSenderId: "324352403818",
-      appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
-    };
+      const firebaseConfig = {
+        apiKey: "AIzaSyCOShY7YMWluwvD1u95fBCGZ7chErFaBVQ",
+        authDomain: "financetracker-698fc.firebaseapp.com",
+        projectId: "financetracker-698fc",
+        storageBucket: "financetracker-698fc.appspot.com",
+        messagingSenderId: "324352403818",
+        appId: "1:324352403818:web:f9622d2a6c8276e1101d13"
+      };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
 
-    window.registrar = async function () {
-      const email = document.getElementById("email").value;
-      const pass = document.getElementById("password").value;
-      try {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        document.getElementById("mensaje").innerText = "✅ Usuario registrado";
-      } catch (error) {
-        document.getElementById("mensaje").innerText = "❌ " + error.message;
-      }
-    };
+      window.registrar = async function () {
+        const email = document.getElementById("registerEmail").value;
+        const pass = document.getElementById("registerPassword").value;
+        try {
+          await createUserWithEmailAndPassword(auth, email, pass);
+          document.getElementById("mensaje").innerText = "✅ Usuario registrado correctamente.";
+        } catch (error) {
+          document.getElementById("mensaje").innerText = "❌ " + error.message;
+        }
+      };
 
-    window.iniciarSesion = async function () {
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPassword").value;
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        document.getElementById("mensaje").innerText = "✅ Sesión iniciada";
-      } catch (error) {
-        document.getElementById("mensaje").innerText = "❌ " + error.message;
-      }
-    };
-  </script>
-</body>
+      window.iniciarSesion = async function () {
+        const email = document.getElementById("loginEmail").value;
+        const pass = document.getElementById("loginPassword").value;
+        try {
+          await signInWithEmailAndPassword(auth, email, pass);
+          document.getElementById("mensaje").innerText = "✅ Sesión iniciada correctamente.";
+        } catch (error) {
+          document.getElementById("mensaje").innerText = "❌ " + error.message;
+        }
+      };
+    </script>
+  </body>
 </html>
